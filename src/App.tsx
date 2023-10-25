@@ -119,16 +119,23 @@ function App() {
         </Tabs>
       </Box>
       {loading ? (
-        <TailSpin
-          height={80}
-          width={80}
-          color="#4fa94d"
-          ariaLabel="tail-spin-loading"
-          radius={1}
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={loading}
-        /> // loadingがtrueの場合はデータ取得中のメッセージを表示
+  <div style={{
+    display: 'flex',
+    justifyContent: 'center', // 横方向の中央揃え
+    alignItems: 'center',     // 縦方向の中央揃え
+    height: '100vh'          // 画面の高さに合わせる
+  }}>
+    <TailSpin
+      height={80}
+      width={80}
+      color="#4fa94d"
+      ariaLabel="tail-spin-loading"
+      radius={1}
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={loading}
+    />
+  </div>
       ) : filteredData.length > 0 ? (
         filteredData.map((sp) => (
           <SpecialMoveCard key={sp.id} data={sp} />
