@@ -67,7 +67,6 @@ function App() {
     }
     const initializeLiff = async (id: string) => {
       clearExpiredIdToken(id)
-      console.log(id);
       await liff.init({ liffId: id })
       liff.ready.then(() => {
         if (!liff.isLoggedIn()) {
@@ -88,7 +87,6 @@ function App() {
       })
     }
     initializeLiff('2001116233-1lQeLOv3');
-
 
     const apiUrl = 'https://original-specialmove.onrender.com/get-specialmove';
     const formData = new FormData();
