@@ -75,7 +75,7 @@ function App() {
         setIdToken(token);
       }
     }
-    initializeLiff('2001116233-KA7Znp4R');
+    initializeLiff('2001116233-1lQeLOv3');
     liff
       .getProfile()
       .then((profile) => {
