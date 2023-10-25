@@ -67,24 +67,27 @@ function App() {
     }
     const initializeLiff = async (id: string) => {
       clearExpiredIdToken(id)
-      await liff.init({ liffId: '2001116233-1lQeLOv3' })
-      if (!liff.isLoggedIn()) {
-        liff.login();
-      } else {
-        const token = liff.getIDToken()
-        setIdToken(token);
-      }
+      await liff.init({ liffId: id })
+      liff.ready.then(() => {
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        } else {
+          const token = liff.getIDToken()
+          setIdToken(token);
+        }
+        liff
+          .getProfile()
+          .then((profile) => {
+            setMyId(profile.userId);
+            console.log(myId);
+          })
+          .catch((err) => {
+            console.log("error", err);
+          });
+      })
     }
     initializeLiff('2001116233-1lQeLOv3');
-    liff
-      .getProfile()
-      .then((profile) => {
-        setMyId(profile.userId);
-        console.log(myId);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
+
 
     const apiUrl = 'https://original-specialmove.onrender.com/get-specialmove';
     const formData = new FormData();
