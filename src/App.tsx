@@ -67,6 +67,7 @@ function App() {
     }
     const initializeLiff = async (id: string) => {
       clearExpiredIdToken(id)
+      console.log(id);
       await liff.init({ liffId: id })
       liff.ready.then(() => {
         if (!liff.isLoggedIn()) {
