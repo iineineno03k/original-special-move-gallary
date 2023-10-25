@@ -111,9 +111,13 @@ function App() {
           <Tab label="取得した必殺技" />
         </Tabs>
       </Box>
-      {filteredData.map((sp) => (
-        <SpecialMoveCard key={sp.id} data={sp} />
-      ))}
+      {filteredData.length > 0 ? (
+        filteredData.map((sp) => (
+          <SpecialMoveCard key={sp.id} data={sp} />
+        ))
+      ) : (
+        <p>表示するものがありません。必殺技登録やバトル画面に促します。</p>
+      )}
     </div>
   );
 }
