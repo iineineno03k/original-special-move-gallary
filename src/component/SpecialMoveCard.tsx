@@ -102,7 +102,7 @@ const SpecialMoveCard: React.FC<Props> = ({ data }) => {
                     <Typography textAlign={"center"} variant="h6" component="div" sx={{ mt: 2 }}>
                         {data.heading}
                     </Typography>
-                    <Typography variant="body1" sx={{ mt: 2 }}>
+                    <Typography variant="body1" style={{ whiteSpace: 'pre-line' }} sx={{ mt: 2 }}>
                         {data.description}
                     </Typography>
                 </Box>
