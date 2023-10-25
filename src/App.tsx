@@ -65,9 +65,9 @@ function App() {
         })
       }
     }
-    const initializeLiff = async (id) => {
+    const initializeLiff = async (id: string) => {
       clearExpiredIdToken(id)
-      await liff.init({ liffId: id })
+      await liff.init({ liffId: '2001116233-1lQeLOv3' })
       if (!liff.isLoggedIn()) {
         liff.login();
       } else {
@@ -80,6 +80,7 @@ function App() {
       .getProfile()
       .then((profile) => {
         setMyId(profile.userId);
+        console.log(myId);
       })
       .catch((err) => {
         console.log("error", err);
