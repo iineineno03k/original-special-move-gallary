@@ -3,6 +3,7 @@ import liff from "@line/liff";
 import "./App.css";
 import SpecialMoveCard from "./component/SpecialMoveCard";
 import { Tabs, Tab, Box } from '@mui/material';
+import { TailSpin } from 'react-loader-spinner';
 
 interface SpecialMoveDto {
   id: number;
@@ -23,6 +24,7 @@ function App() {
   const [idToken, setIdToken] = useState('');
   const [myId, setMyId] = useState('');
   const [tabValue, setTabValue] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue);
@@ -100,9 +102,11 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setData(data);
+        setLoading(false);
       })
       .catch(error => {
         console.error('API呼び出しエラー:', error);
+        setLoading(false);
       });
   }, []);
 
@@ -114,7 +118,18 @@ function App() {
           <Tab label="取得した必殺技" />
         </Tabs>
       </Box>
-      {filteredData.length > 0 ? (
+      {loading ? (
+        <TailSpin
+          height={80}
+          width={80}
+          color="#4fa94d"
+          ariaLabel="tail-spin-loading"
+          radius={1}
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={loading}
+        /> // loadingがtrueの場合はデータ取得中のメッセージを表示
+      ) : filteredData.length > 0 ? (
         filteredData.map((sp) => (
           <SpecialMoveCard key={sp.id} data={sp} />
         ))
