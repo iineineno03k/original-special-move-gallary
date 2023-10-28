@@ -84,7 +84,7 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
                         <Button variant="outlined" sx={{ mt: 2 }} onClick={handleOpen}>
                             詳細
                         </Button>
-                        <Button variant="outlined" sx={{ mt: 2, ml: 2 }} onClick={addToDeck}
+                        <Button variant="outlined" sx={{ mt: 2 }} onClick={addToDeck}
                             disabled={isDataInDeck}>
                             デッキ登録
                         </Button>
