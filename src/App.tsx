@@ -94,7 +94,7 @@ function App() {
         setData(data);
       })
       .catch(error => {
-        console.error('API呼び出しエラー:', error);
+        console.error('必殺技取得エラー:', error);
         setLoading(false);
       });
 
@@ -105,7 +105,7 @@ function App() {
         setLoading(false);
       })
       .catch(error => {
-        console.error('API呼び出しエラー:', error);
+        console.error('デッキ取得エラー:', error);
         setLoading(false);
       });
   }, []);
