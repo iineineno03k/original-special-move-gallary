@@ -4,23 +4,12 @@ import "./App.css";
 import SpecialMoveCard from "./component/SpecialMoveCard";
 import { Tabs, Tab, Box } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
-
-interface SpecialMoveDto {
-  id: number;
-  userId: string;
-  spName: string;
-  furigana: string;
-  heading: string;
-  description: string;
-  imageName: string;
-  registedTime: string;
-  battleCount: number;
-  winCount: number;
-  loseCount: number;
-}
+import { SpecialMoveDeckDto, SpecialMoveDto } from "./types";
+import DeckCard from "./component/DeckCard";
 
 function App() {
   const [data, setData] = useState<SpecialMoveDto[]>([]);
+  const [deckData, setDeckData] = useState<SpecialMoveDeckDto[]>([]);
   const [idToken, setIdToken] = useState('');
   const [myId, setMyId] = useState('');
   const [tabValue, setTabValue] = useState(0);
@@ -91,6 +80,7 @@ function App() {
     initializeLiff('2001116233-1lQeLOv3');
 
     const apiUrl = 'https://original-specialmove.onrender.com/get-specialmove';
+    const deckUrl = 'https://original-specialmove.onrender.com/get-specialmove-deck';
     const formData = new FormData();
     formData.append('idToken', idToken);
     const requestOptions = {
@@ -102,6 +92,16 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setData(data);
+      })
+      .catch(error => {
+        console.error('API呼び出しエラー:', error);
+        setLoading(false);
+      });
+
+    fetch(deckUrl, requestOptions)
+      .then(response => response.json())
+      .then(deckData => {
+        setDeckData(deckData);
         setLoading(false);
       })
       .catch(error => {
@@ -116,33 +116,51 @@ function App() {
         <Tabs value={tabValue} onChange={handleTabChange} centered>
           <Tab label="My必殺技" />
           <Tab label="取得した必殺技" />
+          <Tab label="Myデッキ" />
         </Tabs>
       </Box>
-      {loading ? (
-  <div style={{
-    display: 'flex',
-    justifyContent: 'center', // 横方向の中央揃え
-    alignItems: 'center',     // 縦方向の中央揃え
-    height: '100vh'          // 画面の高さに合わせる
-  }}>
-    <TailSpin
-      height={80}
-      width={80}
-      color="#4fa94d"
-      ariaLabel="tail-spin-loading"
-      radius={1}
-      wrapperStyle={{}}
-      wrapperClass=""
-      visible={loading}
-    />
-  </div>
-      ) : filteredData.length > 0 ? (
-        filteredData.map((sp) => (
-          <SpecialMoveCard key={sp.id} data={sp} />
-        ))
-      ) : (
-        <p>表示するものがありません。必殺技登録やバトル画面に促します。</p>
-      )}
+      {
+        loading ? (
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh'
+          }}>
+            <TailSpin
+              height={80}
+              width={80}
+              color="#4fa94d"
+              ariaLabel="tail-spin-loading"
+              radius={1}
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={loading}
+            />
+          </div>
+        ) : (
+          tabValue === 0
+            ? (filteredData.length > 0
+              ? filteredData.map((sp) => <SpecialMoveCard key={sp.id}
+                data={sp}
+                deckData={deckData}
+                setDeckData={setDeckData}
+                idToken={idToken} />)
+              : <p>フォームから必殺技を作ろう</p>)
+            : tabValue === 1
+              ? (filteredData.length > 0
+                ? filteredData.map((sp) => <SpecialMoveCard key={sp.id}
+                  data={sp}
+                  deckData={deckData}
+                  setDeckData={setDeckData}
+                  idToken={idToken} />)
+                : <p>オンライン対戦でお気に入り必殺技を見つけよう</p>)
+              : (deckData.length > 0
+                ? deckData.map((deck) => <DeckCard key={deck.id} data={deck} setDeckData={setDeckData} />)
+                : <p>デッキ登録をしよう</p>)
+        )
+      }
+
     </div>
   );
 }

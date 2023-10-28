@@ -10,18 +10,15 @@ import {
     IconButton,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { SpecialMoveDeckDto, SpecialMoveDto } from '../types';
+import { SpecialMoveDeckDto } from '../types';
 
-interface Props {
-    data: SpecialMoveDto;
-    deckData: SpecialMoveDeckDto[];
+interface DeckCardProps {
+    data: SpecialMoveDeckDto;
     setDeckData: React.Dispatch<React.SetStateAction<SpecialMoveDeckDto[]>>;
-    idToken: string
 }
 
-const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken }) => {
+const DeckCard: React.FC<DeckCardProps> = ({ data, setDeckData }) => {
     const [open, setOpen] = useState(false);
-    const isDataInDeck = deckData.some(deck => deck.id === data.id);
 
     const handleOpen = () => {
         setOpen(true);
@@ -30,35 +27,25 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
     const handleClose = () => {
         setOpen(false);
     };
-    const addToDeck = async () => {
-        if (deckData.length >= 5) {
-            alert("デッキの数が5以上なので、新しいデッキを追加できません。");
-            return;
-        }
-
-
+    const deleteToDeck = async () => {
         try {
-            const apiUrl = 'http://localhost:8080/post-specialmove-deck';
-            const requestData = {
-                idToken: idToken,
-                sp: data
-            };
+            const apiUrl = 'http://localhost:8080/put-specialmove-deck';
+            const formData = new FormData();
+            formData.append('deckId', data.deckId.toString());
+
             const response = await fetch(apiUrl, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestData),
+                body: formData
             });
 
-            const responseData: SpecialMoveDeckDto = await response.json();
-
-            setDeckData(prevDeckData => [...prevDeckData, responseData]);
+            if (response.status !== 200) {
+                throw new Error('デッキ削除に失敗しました。');
+            }
+            setDeckData(prevDeckData => prevDeckData.filter(deck => deck.id !== data.id));
         } catch (error) {
-            console.error("デッキ登録に失敗しました:", error);
+            console.error("デッキ削除に失敗しました:", error);
         }
     };
-
     return (
         <Box flexDirection="column" alignItems="start">
             <Card sx={{ mb: 2 }}>
@@ -84,9 +71,8 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
                         <Button variant="outlined" sx={{ mt: 2 }} onClick={handleOpen}>
                             詳細
                         </Button>
-                        <Button variant="outlined" sx={{ mt: 2, ml: 2 }} onClick={addToDeck}
-                            disabled={isDataInDeck}>
-                            デッキ登録
+                        <Button variant="outlined" sx={{ mt: 2, ml: 2 }} onClick={deleteToDeck}>
+                            デッキ削除
                         </Button>
                     </CardContent>
                 </Box>
@@ -135,5 +121,4 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
     );
 };
 
-
-export default SpecialMoveCard;
+export default DeckCard;
