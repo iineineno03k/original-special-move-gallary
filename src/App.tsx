@@ -57,57 +57,51 @@ function App() {
       }
     }
     const initializeLiff = async (id: string) => {
-      clearExpiredIdToken(id)
-      await liff.init({ liffId: id })
-      liff.ready.then(() => {
-        if (!liff.isLoggedIn()) {
-          liff.login();
-        } else {
-          const token = liff.getIDToken()
-          setIdToken(token);
-        }
-        liff
-          .getProfile()
-          .then((profile) => {
-            setMyId(profile.userId);
-            console.log(myId);
-          })
-          .catch((err) => {
-            console.log("error", err);
-          });
-      })
-    }
-    initializeLiff('2001116233-1lQeLOv3');
+      clearExpiredIdToken(id);
+      await liff.init({ liffId: id });
 
-    const apiUrl = 'https://original-specialmove.onrender.com/get-specialmove';
-    const deckUrl = 'https://original-specialmove.onrender.com/get-specialmove-deck';
-    const formData = new FormData();
-    formData.append('idToken', idToken);
-    const requestOptions = {
-      method: 'POST',
-      body: formData
-    };
+      if (!liff.isLoggedIn()) {
+        liff.login();
+        return; // ここでログインする場合、以降の処理は中断
+      }
 
-    fetch(apiUrl, requestOptions)
-      .then(response => response.json())
-      .then(data => {
+      const token = liff.getIDToken();
+      setIdToken(token);
+
+      try {
+        const profile = await liff.getProfile();
+        setMyId(profile.userId);
+      } catch (err) {
+        console.log("error", err);
+      }
+
+      // fetch のリクエスト
+      const apiUrl = 'https://original-specialmove.onrender.com/get-specialmove';
+      const deckUrl = 'https://original-specialmove.onrender.com/get-specialmove-deck';
+      const formData = new FormData();
+      formData.append('idToken', token);  // ローカル変数を直接使用
+
+      try {
+        const response = await fetch(apiUrl, { method: 'POST', body: formData });
+        const data = await response.json();
         setData(data);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('必殺技取得エラー:', error);
         setLoading(false);
-      });
+      }
 
-    fetch(deckUrl, requestOptions)
-      .then(response => response.json())
-      .then(deckData => {
+      try {
+        const deckResponse = await fetch(deckUrl, { method: 'POST', body: formData });
+        const deckData = await deckResponse.json();
         setDeckData(deckData);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('デッキ取得エラー:', error);
         setLoading(false);
-      });
+      }
+    };
+
+    initializeLiff('2001116233-1lQeLOv3');
   }, []);
 
   return (
