@@ -11,7 +11,7 @@ function App() {
   const [data, setData] = useState<SpecialMoveDto[]>([]);
   const [deckData, setDeckData] = useState<SpecialMoveDeckDto[]>([]);
   const [idToken, setIdToken] = useState('');
-  const [myId, setMyId] = useState('');
+  const [myId, setMyId] = useState('fuga');
   const [tabValue, setTabValue] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -57,27 +57,28 @@ function App() {
       }
     }
     const initializeLiff = async (id: string) => {
-      clearExpiredIdToken(id);
-      await liff.init({ liffId: id });
+      // clearExpiredIdToken(id);
+      // await liff.init({ liffId: id });
 
-      if (!liff.isLoggedIn()) {
-        liff.login();
-        return; // ここでログインする場合、以降の処理は中断
-      }
+      // if (!liff.isLoggedIn()) {
+      //   liff.login();
+      //   return; // ここでログインする場合、以降の処理は中断
+      // }
 
-      const token = liff.getIDToken();
-      setIdToken(token);
+      // const token = liff.getIDToken();
+      // setIdToken(token);
 
-      try {
-        const profile = await liff.getProfile();
-        setMyId(profile.userId);
-      } catch (err) {
-        console.log("error", err);
-      }
+      // try {
+      //   const profile = await liff.getProfile();
+      //   setMyId(profile.userId);
+      // } catch (err) {
+      //   console.log("error", err);
+      // }
 
       // fetch のリクエスト
-      const apiUrl = 'https://original-specialmove.onrender.com/get-specialmove';
-      const deckUrl = 'https://original-specialmove.onrender.com/get-specialmove-deck';
+      const token = "hoge";
+      const apiUrl = 'http://localhost:8080/get-specialmove';
+      const deckUrl = 'http://localhost:8080/get-specialmove-deck';
       const formData = new FormData();
       formData.append('idToken', token);  // ローカル変数を直接使用
 

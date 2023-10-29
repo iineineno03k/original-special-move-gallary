@@ -38,7 +38,7 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
 
 
         try {
-            const apiUrl = 'https://original-specialmove.onrender.com/post-specialmove-deck';
+            const apiUrl = 'http://localhost:8080/post-specialmove-deck';
             const requestData = {
                 idToken: idToken,
                 sp: data

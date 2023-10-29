@@ -29,7 +29,7 @@ const DeckCard: React.FC<DeckCardProps> = ({ data, setDeckData }) => {
     };
     const deleteToDeck = async () => {
         try {
-            const apiUrl = 'https://original-specialmove.onrender.com/put-specialmove-deck';
+            const apiUrl = 'http://localhost:8080/put-specialmove-deck';
             const formData = new FormData();
             formData.append('deckId', data.deckId.toString());
 
