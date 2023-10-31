@@ -22,7 +22,7 @@ interface Props {
 const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken }) => {
     const [open, setOpen] = useState(false);
     const isDataInDeck = deckData.some(deck => deck.id === data.id);
-    const winPercentage = data.battleCount === 0 ? "NoData" : (data.winCount / data.battleCount) * 100 + "%";
+    const winPercentage = data.battleCount === 0 ? "NoData" : Math.round((data.winCount / data.battleCount) * 100) + "%";
 
     const handleOpen = () => {
         setOpen(true);
@@ -129,6 +129,9 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
                     </Typography>
                     <Typography variant="body1" style={{ whiteSpace: 'pre-line' }} sx={{ mt: 2 }}>
                         {data.description}
+                    </Typography>
+                    <Typography textAlign={"right"} variant="body1" sx={{ mt: 2 }}>
+                        {data.winCount}勝{data.loseCount}敗
                     </Typography>
                     <Typography textAlign={"right"} variant="body1" sx={{ mt: 2 }}>
                         勝率: {winPercentage}

@@ -71,7 +71,7 @@ const DeckCard: React.FC<DeckCardProps> = ({ data, setDeckData }) => {
                         <Button variant="outlined" sx={{ mt: 2 }} onClick={handleOpen}>
                             詳細
                         </Button>
-                        <Button variant="outlined" sx={{ mt: 2, ml: 2 }} onClick={deleteToDeck}>
+                        <Button variant="outlined" sx={{ mt: 2 }} onClick={deleteToDeck}>
                             デッキ削除
                         </Button>
                     </CardContent>
