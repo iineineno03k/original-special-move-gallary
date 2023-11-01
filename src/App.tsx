@@ -107,6 +107,18 @@ function App() {
 
   return (
     <div>
+      {loading && (
+        <div className="overlay">
+          <TailSpin
+            height={80}
+            width={80}
+            color="#4fa94d"
+            ariaLabel="tail-spin-loading"
+            radius={1}
+            visible={true}
+          />
+        </div>
+      )}
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
         <Tabs value={tabValue} onChange={handleTabChange} centered>
           <Tab label="My必殺技" />
@@ -114,48 +126,28 @@ function App() {
           <Tab label="Myデッキ" />
         </Tabs>
       </Box>
-      {
-        loading ? (
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh'
-          }}>
-            <TailSpin
-              height={80}
-              width={80}
-              color="#4fa94d"
-              ariaLabel="tail-spin-loading"
-              radius={1}
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={loading}
-            />
-          </div>
-        ) : (
-          tabValue === 0
-            ? (filteredData.length > 0
-              ? filteredData.map((sp) => <SpecialMoveCard key={sp.id}
-                data={sp}
-                deckData={deckData}
-                setDeckData={setDeckData}
-                idToken={idToken} />)
-              : <p>フォームから必殺技を作ろう</p>)
-            : tabValue === 1
-              ? (filteredData.length > 0
-                ? filteredData.map((sp) => <SpecialMoveCard key={sp.id}
-                  data={sp}
-                  deckData={deckData}
-                  setDeckData={setDeckData}
-                  idToken={idToken} />)
-                : <p>オンライン対戦でお気に入り必殺技を見つけよう</p>)
-              : (deckData.length > 0
-                ? deckData.map((deck) => <DeckCard key={deck.id} data={deck} setDeckData={setDeckData} />)
-                : <p>デッキ登録をしよう</p>)
-        )
-      }
 
+      {tabValue === 0 ? (
+        filteredData.length > 0 ? (
+          filteredData.map((sp) => (
+            <SpecialMoveCard key={sp.id} data={sp} deckData={deckData} setDeckData={setDeckData} idToken={idToken} />
+          ))
+        ) : (
+          <p>フォームから必殺技を作ろう</p>
+        )
+      ) : tabValue === 1 ? (
+        filteredData.length > 0 ? (
+          filteredData.map((sp) => (
+            <SpecialMoveCard key={sp.id} data={sp} deckData={deckData} setDeckData={setDeckData} idToken={idToken} />
+          ))
+        ) : (
+          <p>オンライン対戦でお気に入り必殺技を見つけよう</p>
+        )
+      ) : deckData.length > 0 ? (
+        deckData.map((deck) => <DeckCard key={deck.id} data={deck} setDeckData={setDeckData} />)
+      ) : (
+        <p>デッキ登録をしよう</p>
+      )}
     </div>
   );
 }
