@@ -143,7 +143,7 @@ function App() {
           <p>オンライン対戦でお気に入り必殺技を見つけよう</p>
         )
       ) : deckData.length > 0 ? (
-        deckData.map((deck) => <DeckCard key={deck.id} data={deck} setDeckData={setDeckData} />)
+        deckData.map((deck) => <DeckCard key={deck.id} data={deck} setDeckData={setDeckData} setLoading={setLoading}/>)
       ) : (
         <p>デッキ登録をしよう</p>
       )}
