@@ -17,9 +17,10 @@ interface Props {
     deckData: SpecialMoveDeckDto[];
     setDeckData: React.Dispatch<React.SetStateAction<SpecialMoveDeckDto[]>>;
     idToken: string
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken }) => {
+const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken, setLoading }) => {
     const [open, setOpen] = useState(false);
     const isDataInDeck = deckData.some(deck => deck.id === data.id);
     const winPercentage = data.battleCount === 0 ? "NoData" : Math.round((data.winCount / data.battleCount) * 100) + "%";
@@ -36,6 +37,7 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
             alert("デッキの数が5以上なので、新しいデッキを追加できません。");
             return;
         }
+        setLoading(true);
 
 
         try {
@@ -58,6 +60,7 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
         } catch (error) {
             console.error("デッキ登録に失敗しました:", error);
         }
+        setLoading(false);
     };
 
     return (
