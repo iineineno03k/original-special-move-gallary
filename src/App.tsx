@@ -62,8 +62,8 @@ function App() {
       await liff.init({ liffId: id });
 
       if (!liff.isLoggedIn()) {
-        //liff.login();
-        //return; // ここでログインする場合、以降の処理は中断
+        liff.login();
+        return; // ここでログインする場合、以降の処理は中断
       }
 
       const token = liff.getIDToken();
@@ -77,8 +77,8 @@ function App() {
       }
 
       // fetch のリクエスト
-      const apiUrl = 'http://localhost:8080/get-specialmove';
-      const deckUrl = 'http://localhost:8080/get-specialmove-deck';
+      const apiUrl = 'https://original-specialmove.onrender.com/get-specialmove';
+      const deckUrl = 'https://original-specialmove.onrender.com/get-specialmove-deck';
       const formData = new FormData();
       formData.append('idToken', token);  // ローカル変数を直接使用
 
