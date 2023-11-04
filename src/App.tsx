@@ -63,7 +63,7 @@ function App() {
 
       if (!liff.isLoggedIn()) {
         liff.login();
-        return; // ここでログインする場合、以降の処理は中断
+        return;
       }
 
       const token = liff.getIDToken();

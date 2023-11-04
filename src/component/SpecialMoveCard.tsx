@@ -94,10 +94,10 @@ const SpecialMoveCard: React.FC<Props> = ({ data, deckData, setDeckData, idToken
                     />
 
                     <CardContent sx={{ flexGrow: 1, p: 1, minWidth: 0 }}>
-                        <Typography gutterBottom variant="caption" display="block" align="center">
+                        <Typography gutterBottom variant="caption" display="block" textAlign="center">
                             {data.furigana}
                         </Typography>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" textAlign={'center'}>
                             {data.spName}
                         </Typography>
                         <Box mt={1.5} display="flex" flexDirection="column">
