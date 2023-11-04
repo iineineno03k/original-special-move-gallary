@@ -15,9 +15,10 @@ import { SpecialMoveDeckDto } from '../types';
 interface DeckCardProps {
     data: SpecialMoveDeckDto;
     setDeckData: React.Dispatch<React.SetStateAction<SpecialMoveDeckDto[]>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DeckCard: React.FC<DeckCardProps> = ({ data, setDeckData }) => {
+const DeckCard: React.FC<DeckCardProps> = ({ data, setDeckData, setLoading }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -28,6 +29,7 @@ const DeckCard: React.FC<DeckCardProps> = ({ data, setDeckData }) => {
         setOpen(false);
     };
     const deleteToDeck = async () => {
+        setLoading(true);
         try {
             const apiUrl = 'http://localhost:8080/put-specialmove-deck';
             const formData = new FormData();
@@ -45,6 +47,7 @@ const DeckCard: React.FC<DeckCardProps> = ({ data, setDeckData }) => {
         } catch (error) {
             console.error("デッキ削除に失敗しました:", error);
         }
+        setLoading(false);
     };
     return (
         <Box flexDirection="column" alignItems="start">
@@ -71,7 +74,7 @@ const DeckCard: React.FC<DeckCardProps> = ({ data, setDeckData }) => {
                         <Button variant="outlined" sx={{ mt: 2 }} onClick={handleOpen}>
                             詳細
                         </Button>
-                        <Button variant="outlined" sx={{ mt: 2, ml: 2 }} onClick={deleteToDeck}>
+                        <Button variant="outlined" sx={{ mt: 2 }} onClick={deleteToDeck}>
                             デッキ削除
                         </Button>
                     </CardContent>
