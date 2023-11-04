@@ -127,26 +127,30 @@ function App() {
         </Tabs>
       </Box>
 
-      {tabValue === 0 ? (
-        filteredData.length > 0 ? (
-          filteredData.map((sp) => (
-            <SpecialMoveCard key={sp.id} data={sp} deckData={deckData} setDeckData={setDeckData} idToken={idToken} />
-          ))
-        ) : (
-          <p>フォームから必殺技を作ろう</p>
-        )
-      ) : tabValue === 1 ? (
-        filteredData.length > 0 ? (
-          filteredData.map((sp) => (
-            <SpecialMoveCard key={sp.id} data={sp} deckData={deckData} setDeckData={setDeckData} idToken={idToken} />
-          ))
-        ) : (
-          <p>オンライン対戦でお気に入り必殺技を見つけよう</p>
-        )
-      ) : deckData.length > 0 ? (
-        deckData.map((deck) => <DeckCard key={deck.id} data={deck} setDeckData={setDeckData} />)
-      ) : (
-        <p>デッキ登録をしよう</p>
+      {!loading && (
+        <>
+          {tabValue === 0 ? (
+            filteredData.length > 0 ? (
+              filteredData.map((sp) => (
+                <SpecialMoveCard key={sp.id} data={sp} deckData={deckData} setDeckData={setDeckData} idToken={idToken} />
+              ))
+            ) : (
+              <p>フォームから必殺技を作ろう</p>
+            )
+          ) : tabValue === 1 ? (
+            filteredData.length > 0 ? (
+              filteredData.map((sp) => (
+                <SpecialMoveCard key={sp.id} data={sp} deckData={deckData} setDeckData={setDeckData} idToken={idToken} />
+              ))
+            ) : (
+              <p>オンライン対戦でお気に入り必殺技を見つけよう</p>
+            )
+          ) : deckData.length > 0 ? (
+            deckData.map((deck) => <DeckCard key={deck.id} data={deck} setDeckData={setDeckData} />)
+          ) : (
+            <p>デッキ登録をしよう</p>
+          )}
+        </>
       )}
     </div>
   );
