@@ -59,15 +59,14 @@ function App() {
     }
     const initializeLiff = async (id: string) => {
       clearExpiredIdToken(id);
-      // await liff.init({ liffId: id });
+      await liff.init({ liffId: id });
 
-      // if (!liff.isLoggedIn()) {
-      //   liff.login();
-      //   return;
-      // }
+      if (!liff.isLoggedIn()) {
+        liff.login();
+        return;
+      }
 
-      // const token = liff.getIDToken();
-      const token = 'hoge';
+      const token = liff.getIDToken();
       setIdToken(token);
 
       try {
