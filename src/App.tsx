@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import liff from "@line/liff";
 import "./App.css";
 import SpecialMoveCard from "./component/SpecialMoveCard";
-import { Tabs, Tab, Box } from '@mui/material';
+import { Tabs, Tab, Box, Typography, Button } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
 import { SpecialMoveDeckDto, SpecialMoveDto } from "./types";
 import DeckCard from "./component/DeckCard";
@@ -105,8 +105,16 @@ function App() {
     initializeLiff('2001116233-1lQeLOv3');
   }, []);
 
+  const navigateToURL = () => {
+    window.location.href = 'https://liff.line.me/2001116233-KA7Znp4R';
+  };
+
+  const navigateJudgeToURL = () => {
+    window.location.href = 'https://liff.line.me/2001116233-O1nxNMvR';
+  };
+
   return (
-    <div>
+    <div className="rootContainer">
       {(loading || loadingCard) && (
         <div className="overlay">
           <TailSpin
@@ -121,9 +129,9 @@ function App() {
       )}
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
         <Tabs value={tabValue} onChange={handleTabChange} centered>
-          <Tab label="My必殺技" />
-          <Tab label="取得した必殺技" />
-          <Tab label="Myデッキ" />
+          <Tab label="オレ技" />
+          <Tab label="イチ押し必殺技" />
+          <Tab label="オレのデッキ" />
         </Tabs>
       </Box>
 
@@ -135,7 +143,14 @@ function App() {
                 <SpecialMoveCard key={sp.id} data={sp} deckData={deckData} setDeckData={setDeckData} idToken={idToken} setLoading={setLoading} />
               ))
             ) : (
-              <p>フォームから必殺技を作ろう</p>
+              <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+                <Typography variant="h6" component="p" gutterBottom>
+                  オレ技生成から必殺技を作ろう！！
+                </Typography>
+                <Button variant="contained" color="primary" onClick={navigateToURL}>
+                  オレ技生成する！
+                </Button>
+              </Box>
             )
           ) : tabValue === 1 ? (
             filteredData.length > 0 ? (
@@ -143,12 +158,23 @@ function App() {
                 <SpecialMoveCard key={sp.id} data={sp} deckData={deckData} setDeckData={setDeckData} idToken={idToken} setLoading={setLoadingCard} />
               ))
             ) : (
-              <p>オンライン対戦でお気に入り必殺技を見つけよう</p>
+              <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+                <Typography variant="h6" component="p" gutterBottom>
+                  世ノ技審判からイチ押し必殺技を見つけよう！！
+                </Typography>
+                <Button variant="contained" color="primary" onClick={navigateJudgeToURL}>
+                  世ノ技審判する！
+                </Button>
+              </Box>
             )
           ) : deckData.length > 0 ? (
             deckData.map((deck) => <DeckCard key={deck.id} data={deck} setDeckData={setDeckData} setLoading={setLoadingCard} />)
           ) : (
-            <p>デッキ登録をしよう</p>
+            <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+              <Typography variant="h6" component="p" gutterBottom>
+                オレだけのデッキを作ろう！！
+              </Typography>
+            </Box>
           )}
         </>
       )}
