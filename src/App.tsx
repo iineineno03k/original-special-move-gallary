@@ -130,7 +130,7 @@ function App() {
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
         <Tabs value={tabValue} onChange={handleTabChange} centered>
           <Tab label="オレ技" />
-          <Tab label="イチ押し必殺技" />
+          <Tab label="推シ技" />
           <Tab label="オレのデッキ" />
         </Tabs>
       </Box>
@@ -160,7 +160,7 @@ function App() {
             ) : (
               <Box sx={{ marginTop: 2, textAlign: 'center' }}>
                 <Typography variant="h6" component="p" gutterBottom>
-                  世ノ技審判からイチ押し必殺技を見つけよう！！
+                  世ノ技審判から推シ技を見つけよう！！
                 </Typography>
                 <Button variant="contained" color="primary" onClick={navigateJudgeToURL}>
                   世ノ技審判する！
