@@ -131,7 +131,7 @@ function App() {
         <Tabs value={tabValue} onChange={handleTabChange} centered>
           <Tab label="オレ技" />
           <Tab label="推シ技" />
-          <Tab label="オレのデッキ" />
+          <Tab label="オレ技デッキ" />
         </Tabs>
       </Box>
 
